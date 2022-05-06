@@ -1,15 +1,15 @@
 # FinalProjectPLP
 
-# Prerequisites:
+## Prerequisites:
 
 - C++ version: 17
 - g++ version: 13.0.0
 
-# How to check C++ version:
+## How to check C++ version:
 
 1. Create a .cpp file with content as below:
 
-````#include<iostream>
+`````#include<iostream>
 
 int main() {
     if (__cplusplus == 201703L)
@@ -22,7 +22,7 @@ int main() {
         std::cout << "C++98" << endl;
     else
         std::cout << "pre-standard C++" << endl;
-}```
+}````
 2. Compile and run the file then you will see your c++ version (*e.g: c++98, c++17*)
 
 # How to set up Raylib
@@ -39,4 +39,4 @@ int main() {
 2. ```clang++ src/*.cpp -Ilib/ -o "bin/build_osx" -std=c++17 -Llib/ -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL lib/libraylib.a```
 3. ```make build_osx``` (You now see a build_osx file in "bin" folder)
 4. Run the main.cpp file
-````
+`````
