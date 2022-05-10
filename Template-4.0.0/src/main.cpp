@@ -80,8 +80,8 @@ const char *BACKGROUNDSOUND = "./assets/Sound/Lofi_Fruits_Music_Gaming_Lofi.mp3"
 
 int main()
 {
-    auto file = LoadFileData("./data/Module 6 - Data Practice copy.xlsx");
-    std::cout << file << std::endl;
+    // auto file = LoadFileData("./data/Module 6 - Data Practice copy.xlsx");
+    // std::cout << file << std::endl;
 
     // Windowm Configuration:
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -178,5 +178,14 @@ int main()
 
 void ShowMenu()
 {
+    // Just to make code run
+    CloseWindow();
     // Code Algorithms to be shown here
+}
+
+void ShowStartOpt()
+{
+    // Just to make code run
+    CloseWindow();
+    // Show the Sorting choices
 }
