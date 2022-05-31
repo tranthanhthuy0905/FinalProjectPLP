@@ -89,7 +89,7 @@ Color LightOrange{248, 129, 39};
 Color DarkBeige{212, 197, 180};
 Color LightRED{255, 204, 1};
 
-// The array itself:
+// The array itself
 std::vector<std::pair<int, int>> arr(NumberOfPillars);
 
 // Constant audio variables
@@ -153,6 +153,7 @@ int main()
 
         if (MuteSound)
         {
+            // Pause Audio and change audio Icon
             DrawTexture(texture, (2 * GetScreenWidth()) / 100,
                         (2 * GetScreenHeight()) / 100, DARKRED);
 
@@ -164,6 +165,7 @@ int main()
         }
         else
         {
+            // Resume Audio and change audio Icon
             DrawTexture(texture, (2 * GetScreenWidth()) / 100,
                         (2 * GetScreenHeight()) / 100, WHITE);
 
@@ -175,15 +177,20 @@ int main()
         }
 
         if (!IsSoundPlaying(initialSound) && !MuteSound)
+            // Play audio at the beginning of the program
             PlaySound(initialSound);
 
+        // Draw the array
         BeginDrawing();
 
+        // Set up background color
         ClearBackground(Beige);
 
+        // Show Sorting Options
         if (ToShowMenuScreen)
             ShowMenuScreen();
 
+        // Reference to the button pressed
         ShouldShowStartOptions = false;
         for (bool *i : SortingChoice)
         {
@@ -191,17 +198,21 @@ int main()
                 ShouldShowStartOptions = true;
         }
 
+        // Show the user's customizatin options
         if (ShouldShowStartOptions)
             ShowStartOptions();
 
+        // Randomize the array
         if (ToRandomizeArray)
             RandomizeArray(arr);
 
+        // Start Sorting button pressed
         if (ShouldStartSorting)
         {
             ToShowMenuScreen = false;
             ShouldShowStartOptions = false;
 
+            // Functions call sorting algorithms
             SortArray();
 
             ShouldStartSorting = false;
@@ -225,22 +236,24 @@ int main()
     return 0;
 }
 
-// Drawing the pillers:
+// Draw the pillars
 void DrawArray(std::vector<std::pair<int, int>> arr)
 {
+
+    // The width of the bar in the array
     float BarWidth = (float)GetScreenWidth() / NumberOfPillars;
 
     for (int i = 0; i < NumberOfPillars; i++)
     {
         Color color = FindColorForPIller(arr[i].second);
 
-        DrawRectangleV(Vector2{(float)i * BarWidth, (float)GetScreenHeight() - arr[i].first},
-                       Vector2{BarWidth, (float)arr[i].first},
+        DrawRectangleV(Vector2{(float)i * BarWidth, (float)GetScreenHeight() - arr[i].first}, // Position where to draw the ith bar
+                       Vector2{BarWidth, (float)arr[i].first}, // the size of the bar
                        color);
     }
 }
 
-// Randomizing The Array:
+// Randomize the array
 void RandomizeArray(std::vector<std::pair<int, int>> &arr)
 {
     for (int i = 0; i < NumberOfPillars; i++)
@@ -255,6 +268,7 @@ void ShowMenuScreen()
 {
     float font = (2.5 * GetScreenWidth()) / 100;
     char Selection_Sort_text[] = "Selection Sort!";
+    // Starting position
     float tmp = (GetScreenWidth() * 5) / 100;
     // Selection_Sort_Button(tmp, Selection_Sort_text);
 
@@ -306,6 +320,7 @@ void ShowStartOptions()
 
     if (UnsortedSpeed)
     {
+        // Normal speed status
         ChangeSpeed('/', SortingSpeed);
         return;
     }
@@ -339,6 +354,7 @@ void ShowStartOptions()
 
     if (UnsortedSize)
     {
+        // Normal size status
         ChangeSize('/', NumberOfPillars);
         return;
     }
@@ -399,6 +415,7 @@ void ChangeSize(char operation, int &value)
     switch (operation)
     {
     case '-':
+    // Minimum size: 5 pillars
         if (value > 5)
         {
             value -= 5;
@@ -434,6 +451,7 @@ void ChangeSize(char operation, int &value)
     DrawArray(arr);
 }
 
+// Sorting Buttons Configuration
 void Bubble_Sort_Button(float size, char Bubble_Sort_text[])
 {
     Color color;
@@ -500,6 +518,7 @@ void Start_Button(float size, float font, char Start[])
     return;
 }
 
+// Set up enumerate Color
 Color FindColorForPIller(int pillerState)
 {
     switch (pillerState)
@@ -518,17 +537,40 @@ Color FindColorForPIller(int pillerState)
     }
 }
 
+// Choose the sorting Algorithms chosen
 void SortArray()
 {
-    Bubble_Sort(arr);
+    for (bool *state : SortingChoice){
+        if (*state == true){
+            if (state == &InsertionSortPressed)
+                Insertion_Sort(arr);
 
-    DrawArray(arr);
+            else if (state == &SelectionSortPressed)
+                Selection_Sort(arr);
+
+            else if (state == &BubbleSortPressed)
+                Bubble_Sort(arr);
+
+            else if (state == &MergeSortPressed)
+                Merge_Sort(arr);
+
+            else if (state == &QuickSortPressed)
+                Quick_Sort(arr); 
+
+                                 
+        }
+
+        *state = false;
+    }
+    
+    return;
 }
 
-// Bubble Sort:
+// Sorting Algorithms
 void Bubble_Sort(std::vector<std::pair<int, int>> &arr)
 {
 
+    // General idea: Run for-loop through each element in the array, swap if its next element is smaller
     int endingPoint = NumberOfPillars;
 
     bool swapped;
@@ -572,7 +614,7 @@ void Bubble_Sort(std::vector<std::pair<int, int>> &arr)
 }
 
 
-// Insertion Sort:
+// Insertion Sort
 void Insertion_Sort(std::vector<std::pair<int, int> > &arr)
 {
 
@@ -621,26 +663,11 @@ void Insertion_Sort(std::vector<std::pair<int, int> > &arr)
             EndDrawing();
         }
 
-        // DE-Select the unnecesserry pillers
-        // for (int k = 0; k < NumberOfPillers; k++)
-        //     if (arr[k].second == SELECTED)
-        //         arr[k].second = NORMAL;
-
-        // // Color the sorted pillers
-        // for (int k = i-1; k >= 0; k--)
-        //     arr[k].second = SORTED;
-
-        // arr[j+1].first = key;
-        // arr[j+1].second = SORTED;
-
         EndDrawing();
     }
-
-    // arr[NumberOfPillers-1].second = SORTED;
 }
 
 // Merge Sort:
-// TODO;
 void Merge_Sort(std::vector<std::pair<int, int> > &arr)
 {
     MergeSort_Finale(arr, 0, NumberOfPillers - 1);
@@ -683,9 +710,6 @@ void Merge(std::vector<std::pair<int, int> > &arr,
     }
 
     BeginDrawing();
-    // ClearBackground(PURPLE);
-
-    // DrawArray(arr);
 
     EndDrawing();
 
@@ -730,7 +754,7 @@ void Merge(std::vector<std::pair<int, int> > &arr,
     }
 }
 
-// Quick Sort:
+// Quick Sort
 void Quick_Sort(std::vector<std::pair<int, int> > &arr)
 {
     Quick_Sort_Final(arr, 0, NumberOfPillers - 1);
@@ -776,16 +800,11 @@ int Partition(std::vector<std::pair<int, int> > &arr, int low, int high)
         }
 
         BeginDrawing();
-        // ClearBackground(PURPLE);
-
-        // DrawArray(arr);
 
         EndDrawing();
 
         for (int k = 0; k < NumberOfPillers; k++)
         {
-            /* if (arr[k].second != SORTED && arr[k].second != PIVOT)
-                arr[k].second = NORMAL; */
 
             if (arr[k].second == COMPARING)
                 arr[k].second = UNSORTED;
