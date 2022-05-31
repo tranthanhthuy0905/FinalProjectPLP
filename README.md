@@ -2,10 +2,19 @@
 
 ## Prerequisites:
 
+- __Compiler__: c++/g++
 - C++ version: 17
 - g++ version: 13.0.0
 
-## How to check C++ version:
+## Knowledge Summary:
+- **_header files_** - pre-existing and user-defined header files
+- _#define_ - declare an identifier with token string (constant/enum val) substituted whenever identifier forms a token: ```#define CONSTVAR 3```
+- __vector__ - dynamic arrays with changeable size, continuous storage (accessed and traversed by _iterator_), several built-in features (iterator, capacity, element accesss)
+- _pair_ - ```pair(dataType1, dataType2) Pair_name``` - store 2 variables into 1
+- *pass_by_pointer* - point to the first element of the array
+- __Static scoping__ - definition of variables is searched in its containing block and outer containing block
+
+### How to check C++ version:
 
 1. Create a .cpp file with content as below:
 
@@ -36,6 +45,7 @@ int main() {
 ## How to run
 
 ### _Automatically_
+I expect to run the _makefile_ file only to auto-generate the build_osx file and run the window. However, it does not run as expectation. Please not feel inconvenient to run my project manually.
 
 ### _Manually_
 
